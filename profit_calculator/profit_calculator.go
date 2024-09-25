@@ -4,12 +4,14 @@ import (
 	"fmt"
 )
 
+// Goals
+// 1) Validate user input
+//    => Show error message & exit if invalid input is provided
+//    - No negative numbers
+//    - Not 0
+// 2) Store calculated results into file
+
 func profit_calculator() {
-	// Build a profit calculator
-	// Ask for revenue, expenses & tax rate
-	// Calculate earnings before tax (EBT) and earnings after tax (profit)
-	// Calculate ratio (EBT/Profit)
-	// Output EBT, profit, and ratio
 
 	revenue := requestValue("Revenue: ")
 	expenses := requestValue("Expenses: ")
