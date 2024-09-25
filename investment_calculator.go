@@ -5,8 +5,9 @@ import (
 	"math"
 )
 
+const inflationRate = 2.5
+
 func investment_calculator() {
-	const inflationRate = 2.5
 	var investmentAmount float64
 	expectedReturnRate := 5.5
 	var years float64
@@ -23,9 +24,7 @@ func investment_calculator() {
 	outputText("Years: ")
 	fmt.Scan(&years)
 
-	futureValue := investmentAmount * math.Pow((1+expectedReturnRate/100), years)
-
-	futureRealValue := futureValue / math.Pow((1+inflationRate/100), years)
+	futureValue, futureRealValue := calculateFutureValues(investmentAmount, expectedReturnRate, years)
 
 	// Sprintf formats and returns a string without printing it.
 
@@ -48,4 +47,10 @@ func investment_calculator() {
 
 func outputText(text string) {
 	fmt.Print(text)
+}
+
+func calculateFutureValues(investmentAmount, expectedReturnRate, years float64) (float64, float64) {
+	fv := investmentAmount * math.Pow((1+expectedReturnRate/100), years)
+	rfv := fv / math.Pow((1+inflationRate/100), years)
+	return fv, rfv
 }
