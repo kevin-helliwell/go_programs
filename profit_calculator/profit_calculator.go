@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"os"
 )
 
 // Goals
@@ -44,7 +45,13 @@ func profit_calculator() {
 	ebt, profit, ratio := generateReport(revenue, expenses, taxRate)
 
 	fmt.Printf("EBT: %.1f\nProfit: %.1f\nRatio: %.1f\n", ebt, profit, ratio)
+	storeReport(ebt, profit, ratio)
 
+}
+
+func storeReport(ebt, profit, ratio float64) {
+	report_values := fmt.Sprintf("EBT: %.1f\nProfit: %.1f\nRatio: %.1f\n", ebt, profit, ratio)
+	os.WriteFile("report.txt", []byte(report_values), 0644)
 }
 
 func requestValue(text string) (value float64, err error) {
