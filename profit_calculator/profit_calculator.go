@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -13,9 +14,32 @@ import (
 
 func profit_calculator() {
 
-	revenue := requestValue("Revenue: ")
-	expenses := requestValue("Expenses: ")
-	taxRate := requestValue("Tax Rate: ")
+	revenue, err := requestValue("Revenue: ")
+
+	if err != nil {
+		fmt.Println(err)
+		return
+		// panic(err)
+	}
+
+	expenses, err := requestValue("Expenses: ")
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	taxRate, err := requestValue("Tax Rate: ")
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// if err1 != nil || err2 != nil || err3 != nil {
+	// 	fmt.Println(err1)
+	// 	return
+	// }
 
 	ebt, profit, ratio := generateReport(revenue, expenses, taxRate)
 
@@ -23,10 +47,13 @@ func profit_calculator() {
 
 }
 
-func requestValue(text string) (value float64) {
+func requestValue(text string) (value float64, err error) {
 	fmt.Print(text)
 	fmt.Scan(&value)
-	return value
+	if value <= 0 {
+		return 0, errors.New("Value must be a positive number.")
+	}
+	return value, nil
 }
 
 func generateReport(revenue, expenses, taxRate float64) (ebt, profit, ratio float64) {
